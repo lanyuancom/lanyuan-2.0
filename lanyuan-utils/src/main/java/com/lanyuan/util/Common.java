@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 public class Common {
 	//后台访问
-	public static final String BACKGROUND_PATH = "/WEB-INF/jsp/background";
+	public static final String BACKGROUND_PATH = "WEB-INF/jsp/background";
 	//前台访问
 	public static final String WEB_PATH = "/WEB-INF/jsp/web";
 	//默认除法运算精度
