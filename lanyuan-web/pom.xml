@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.lanyuan</groupId>
+    <artifactId>lanyuan</artifactId>
+    <version>2.0</version>
+  </parent>
+  <groupId>com.lanyuan.web</groupId>
+  <artifactId>lanyuan-web</artifactId>
+   <packaging>war</packaging>
+  <name>lanyuan-web</name>
+  <url>http://maven.apache.org</url>
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+    	<groupId>com.lanyuan.entity</groupId>
+    	<artifactId>lanyuan-entity</artifactId>
+    	<version>2.0</version>
+    </dependency>
+    <dependency>
+    	<groupId>com.lanyuan.pulgins</groupId>
+    	<artifactId>lanyuan-pulgins</artifactId>
+    	<version>2.0</version>
+    </dependency>
+    <dependency>
+    	<groupId>com.lanyuan.service</groupId>
+    	<artifactId>lanyuan-service</artifactId>
+    	<version>2.0</version>
+    </dependency>
+    <dependency>
+    	<groupId>com.lanyuan.utils</groupId>
+    	<artifactId>lanyuan-utils</artifactId>
+    	<version>2.0</version>
+    </dependency>
+    <dependency>
+    	<groupId>com.lanyuan.security</groupId>
+    	<artifactId>lanyuan-security</artifactId>
+    	<version>2.0</version>
+    </dependency>
+    <!--json-lib-->  
+<dependency>  
+    <groupId>net.sf.json-lib</groupId>  
+    <artifactId>json-lib</artifactId>  
+    <version>2.4</version>  
+    <classifier>jdk15</classifier>  
+</dependency>
+  </dependencies>
+  <build>
+        <plugins> 
+            <!-- 配置加入jetty服务器，开发时我们一般使用jetty服务器 -->  
+            <plugin> 
+               <groupId>org.mortbay.jetty</groupId>  
+                <artifactId>jetty-maven-plugin</artifactId>  
+                <version>7.2.2.v20101205</version>  
+
+                <configuration> 
+               <target>1.6</target>
+               <source>1.6</source>
+               <encoding>UTF-8</encoding>
+                    <!-- 设置扫描target/classes内部文件变化时间间隔 -->  
+                    <!--<scanIntervalSeconds>10</scanIntervalSeconds>-->  
+                    <packagingExcludes>WEB-INF/web.xml</packagingExcludes>
+                    <webApp> 
+                        <contextPath>/</contextPath> 
+                    </webApp> 
+                </configuration> 
+            </plugin> 
+        </plugins> 
+  </build>
+</project>

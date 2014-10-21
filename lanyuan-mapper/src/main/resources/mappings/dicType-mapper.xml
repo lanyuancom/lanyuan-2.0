@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lanyuan.mapper.DicTypeMapper">
+
+<!--mybatis ehcache缓存配置  -->
+<!-- 以下两个<cache>标签二选一,第一个可以输出日志,第二个不输出日志 
+<cache type="org.mybatis.caches.ehcache.LoggingEhcache" />-->
+<!-- <cache type="org.mybatis.caches.ehcache.EhcacheCache"/> -->
+	<!-- 以下与实体类的中字段一致 -->
+	<sql id="selectId">
+		id,
+		dicTypeKey,
+		dicTypeName,
+		description
+	</sql>
+	
+	<select id="isExist" resultType="DicType" parameterType="String">
+		select
+		<include refid="selectId" />
+		from dic_type
+		where dicTypeKey = #{dicTypeKey}
+	</select>
+	
+	<select id="query" resultType="DicType" parameterType="java.util.HashMap">
+		select
+		<include refid="selectId" />
+		from dic_type 
+		<where>
+			<if test="t.dicTypeName != null and t.dicTypeName != ''">
+				 dicTypeName like '%${t.dicTypeName}%'
+			</if>
+		</where>
+	</select>
+	
+	<select id="queryAll" resultType="DicType" parameterType="java.util.HashMap">
+		select
+		<include refid="selectId" />
+		from dic_type where 1=1
+		
+	</select>
+	<select id="queryById" resultType="DicType" parameterType="java.util.HashMap">
+		select
+		<include refid="selectId" />
+		from dic_type
+		where id = #{id}
+		
+	</select>
+	<!-- 增加人员 -->
+	<insert id="add" parameterType="DicType">
+		insert into dic_type (
+			dicTypeKey,
+			dicTypeName,
+			description
+		)values (
+			#{dicTypeKey},
+			#{dicTypeName},
+			#{description}
+		)
+	</insert>
+
+	<delete id="delete" parameterType="String">
+		delete from dic_type where
+		id=#{id}
+	</delete>
+	
+	<select id="getById" parameterType="String" resultType="DicType">
+		select
+		<include refid="selectId" />
+		from dic_type where id=#{id}
+	</select>
+	
+	<update id="update" parameterType="DicType">
+		update dic_type
+		 set
+	    	dicTypeKey = #{dicTypeKey},
+	    	dicTypeName = #{dicTypeName},
+			description = #{description}
+	   where id = #{id}
+	</update>
+	
+	<update id="updatePreset" parameterType="DicType">
+		update dic_type
+		 set
+	    	dicTypeName = #{dicTypeName}
+	   where dicType = #{dicType} and dicTypeKey = #{dicTypeKey}
+	</update>
+	
+	<update id="deleteDicType" parameterType="String">
+		update dic_type set deletestatus = 1
+		where id = #{id}
+	</update>
+</mapper>

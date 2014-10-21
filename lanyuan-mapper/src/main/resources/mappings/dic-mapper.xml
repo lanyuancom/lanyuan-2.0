@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lanyuan.mapper.DicMapper">
+
+<!--mybatis ehcache缓存配置  -->
+<!-- 以下两个<cache>标签二选一,第一个可以输出日志,第二个不输出日志 
+<cache type="org.mybatis.caches.ehcache.LoggingEhcache" />-->
+<!-- <cache type="org.mybatis.caches.ehcache.EhcacheCache"/> -->
+	<!-- 以下与实体类的中字段一致 -->
+	<sql id="selectId">
+		dic.id,
+		dic.dicKey,
+		dic.dicName,
+		dic.dicTypeId,
+		dic.description
+	</sql>
+	
+	<select id="isExist" resultType="Dic" parameterType="String">
+		select
+		<include refid="selectId" />
+		from dic
+		where dicKey = #{dicKey}
+	</select>
+	
+	<select id="query" resultType="Dic" parameterType="java.util.HashMap">
+		select
+		<include refid="selectId" />,dic_type.dicTypeName,dic_type.dicTypeKey
+		from dic,dic_type
+		<where>
+		dic.dicTypeId=dic_type.id
+		<if test="t.dicName != null and t.dicName != ''">
+			and dic,dicName like '%${t.dicName}%'
+		</if>
+		<if test="t.dicTypeKey != null and t.dicTypeKey != ''">
+			and dic_type.dicTypeKey = #{t.dicTypeKey}
+		</if>
+		</where> 
+	</select>
+	
+	<select id="queryAll" resultType="Dic" parameterType="Dic">
+		select
+		<include refid="selectId" />,dic_type.dicTypeName,dic_type.dicTypeKey
+		from dic,dic_type
+		where dic.dicTypeId=dic_type.id
+		<if test="dicName != null and dicName != ''">
+			and dic.dicName like '%${dicName}%'
+		</if>
+		<if test="dicTypeKey != null and dicTypeKey != ''">
+			and dic_type.dicTypeKey = #{dicTypeKey}
+		</if>
+	</select>
+	
+	<!-- 增加人员 -->
+	<insert id="add" parameterType="Dic">
+		insert into dic (
+			dicKey,
+			dicName,
+			dicTypeId,
+			description
+		)values (
+			#{dicKey},
+			#{dicName},
+			#{dicTypeId},
+			#{description}
+		)
+	</insert>
+
+	<delete id="delete" parameterType="String">
+		delete from dic where
+		id=#{id}
+	</delete>
+	
+	<select id="getById" parameterType="String" resultType="Dic">
+		select
+		<include refid="selectId" />
+		from dic where id=#{id}
+	</select>
+	
+	<update id="update" parameterType="Dic">
+		update dic
+		 set
+		    dicTypeId =#{dicTypeId},
+	    	dicKey = #{dicKey},
+	    	dicName = #{dicName},
+			description = #{description}
+	   where id = #{id}
+	</update>
+	<update id="deleteDic" parameterType="String">
+		update dic set deletestatus = 1
+		where id = #{id}
+	</update>
+</mapper>

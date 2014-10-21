@@ -1,0 +1,62 @@
+@charset "utf-8";
+/* CSS Document */
+body{
+	background:url(../images/img03.jpg);
+	background-position:top center;
+    font-family:Georgia, "Times New Roman", Times, serif;
+	font-size:14px;
+}
+
+.l_flow-btn {
+right: inherit;
+left: 60px;
+bottom: -60px;
+}
+
+.l_flow-btn {
+position: absolute;
+left:130;
+top:0px;
+cursor: pointer;
+background: url(../images/flow-btn-bg.png) top no-repeat;
+width: 110px;
+padding-right: 15px;
+height: 71px;
+font-family:"幼圆";
+font-size: 24px;
+font-weight:bold;
+color: white;
+text-decoration: none;
+text-align: center;
+line-height: 53px;
+text-shadow: 1px 1px 1px #569B2E;
+}
+
+.l_flow-btn:hover {
+background-position: bottom;
+}
+
+.l_header{
+	background-image:url(../images/leaf_body.png);
+	width:100%;
+	height:40px;	
+}
+
+.cl_body{
+	width:100%;
+	margin:0 auto;
+}
+
+.l_container{
+	height:99.9%;
+	overflow:hidden;
+}
+
+/*leaf DIV*/
+
+.leafSet{
+	width: 100%;
+	opacity:0.9; /* 标准: Firefox 1.5 以上, Opera, Safari */
+ filter: alpha(opacity=90); /* IE 8 以下 */
+	-ms-filter: "alpha(opacity=90)"; /* IE 8 */
+}

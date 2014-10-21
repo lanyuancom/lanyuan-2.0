@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lanyuan.mapper.AccountMapper">
+
+	<!--mybatis ehcache缓存配置 -->
+	<!-- 以下两个<cache>标签二选一,第一个可以输出日志,第二个不输出日志 <cache type="org.mybatis.caches.ehcache.LoggingEhcache" 
+		/> -->
+	<!-- <cache type="org.mybatis.caches.ehcache.EhcacheCache"/> -->
+	<!-- 以下与实体类的中字段一致 -->
+	<sql id="selectId">
+		id,
+		accountName,
+		(select group_concat(name) from ly_role
+		where ly_role.id
+		in (SELECT role_id FROM acc_role WHERE
+		acc_id=account.id) ) roleName,
+		password,
+		description,
+		state,
+		createTime
+	</sql>
+
+	<!--resultType="Account" 每返回一条结果封装到Account里 -->
+	<select id="queryAll" resultType="Account" parameterType="Account">
+		select
+		<include refid="selectId" />
+		from account
+		<where>
+			<if test="accountName != null and accountName != ''">
+				accountName like '%${accountName}%'
+			</if>
+		</where>
+	</select>
+
+	<select id="isExist" resultType="Account" parameterType="String">
+		select
+		<include refid="selectId" />
+		from account
+		where accountName = #{accountName}
+	</select>
+
+	<!--resultType="Account" 每返回一条结果封装到Account里 -->
+	<select id="query" resultType="Account" parameterType="java.util.HashMap">
+		select
+		<include refid="selectId" />
+		from account
+		<where>
+			<if test="t.accountName != null and t.accountName != ''">
+				accountName like '%${t.accountName}%'
+			</if>
+		</where>
+	</select>
+
+	<select id="queryNoMatch" resultType="Account" parameterType="java.util.HashMap">
+		select
+		a.id,
+		a.accountName,
+		a.password,
+		a.accountType,
+		a.description,
+		a.state,
+		a.createTime,
+		(SELECT dp.name from department dp where dp.id =
+		d.subdep_id) depName
+		from account a LEFT JOIN dep_account d on
+		a.id=d.account_id
+		<where>
+			<if test="t.accountName != null and t.accountName != ''">
+				accountName like '%${t.accountName}%'
+			</if>
+		</where>
+	</select>
+
+	<!-- 增加用户 -->
+	<insert id="add" parameterType="Account">
+		insert into account (
+		accountName,
+		password,
+		description,
+		state )
+		values (#{accountName},
+		#{password}, #{description},
+		#{state})
+	</insert>
+
+	<delete id="delete" parameterType="String">
+		delete from account where
+		id=#{id}
+	</delete>
+
+	<select id="getById" parameterType="String" resultType="Account">
+		select
+		<include refid="selectId" />
+		from account where id=#{id}
+	</select>
+
+	<update id="update" parameterType="Account">
+		update account
+		<set>
+			<if test="accountName != null and accountName != ''">
+				accountName=#{accountName},
+			</if>
+			<if test="password != null and password != ''">
+				password=#{password},
+			</if>
+			<if test="description != null and description != ''">
+				description=#{description},
+			</if>
+			<if test="state != null and state != ''">
+				state=#{state},
+			</if>
+			<if test="createTime != null and createTime != ''">
+				createTime=#{createTime}
+			</if>
+		</set>
+		where id=#{id}
+	</update>
+
+	<!-- 验证用户登陆 -->
+	<select id="countAccount" parameterType="Account" resultType="Account">
+		select
+		<include refid="selectId" />
+		from account where
+		accountName=#{accountName} and password=#{password}
+	</select>
+
+	<!-- 根据用户名查出id -->
+	<select id="querySingleAccount" parameterType="String"
+		resultType="Account">
+		select
+		<include refid="selectId" />
+		from account where accountName=#{accountName}
+	</select>
+</mapper>

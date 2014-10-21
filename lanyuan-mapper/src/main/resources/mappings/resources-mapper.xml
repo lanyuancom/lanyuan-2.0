@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lanyuan.mapper.ResourcesMapper">
+<!--mybatis ehcache缓存配置  -->
+<!-- 以下两个<cache>标签二选一,第一个可以输出日志,第二个不输出日志
+<cache type="org.mybatis.caches.ehcache.LoggingEhcache" /> -->
+<!-- <cache type="org.mybatis.caches.ehcache.EhcacheCache"/> -->
+
+	<!-- 以下与实体类的中字段一致 -->
+	<sql id="selectId">
+	id,
+	name,
+	parentId,
+	(select r.name from resources r where r.id = resources.parentId ) parentName,
+	resKey,
+	type,
+	resUrl,
+	level,
+	description
+	</sql>
+	
+	<select id="queryAll" resultType="Resources" parameterType="Resources">
+		select
+		<include refid="selectId" />
+		from resources 
+		where 1+1
+		<if test="name != null and name != ''">
+				and name like '%${name}%'
+				</if>
+		<if test="parentId != null">
+				and parentId =#{parentId}
+		</if>
+		order By level asc
+	</select>
+	<!-- -->
+	<select id="getMaxLevel" resultType="int">
+		select max(level)+1  from resources
+	</select>
+	<!--resultType="Resources" 每返回一条结果封装到Resources里 -->
+	<select id="query" resultType="Resources" parameterType="java.util.HashMap">
+		select
+		<include refid="selectId" />
+		from resources
+		<where>
+			<if test="t.name != null and t.name != ''">
+				name like '%${t.name}%'
+				</if>
+		</where>
+		order By level asc
+	</select>
+	
+	<!--查找菜单名称是否是否存在-->
+		<select id="isExist" resultType="Resources" parameterType="String">
+		select
+		<include refid="selectId" />
+		from resources
+		where name = #{accountName}
+	</select>
+	<!-- 新增 -->
+	<insert id="add" parameterType="Resources">
+		insert into resources (
+					name,
+					parentId,
+					resKey,
+					type,
+					resUrl,
+					level,
+					description
+								) 
+		values (
+				#{name},
+				#{parentId},
+				#{resKey},
+				#{type},
+				#{resUrl},
+				#{level},
+				#{description}
+				)
+	</insert>
+	
+	<!-- 删 -->
+	<delete id="delete" parameterType="String">
+		delete from resources
+		where id=#{id}
+	</delete>
+	
+	<select id="getById" parameterType="String" resultType="Resources">
+		SELECT 
+		<include refid="selectId" />
+		 from resources where id=#{id}
+	</select>
+	
+	<select id="queryByParentId" parameterType="java.util.HashMap" resultType="Resources">
+		SELECT 
+		<include refid="selectId" />
+		 from resources where  type =  convert(#{type},SIGNED) - 1
+	</select>
+	
+	
+	<!-- 更新 -->
+	<update id="update" parameterType="Resources">
+	    update resources
+	    set
+	    	name = #{name},
+	    	parentId = #{parentId},
+			resKey = #{resKey},
+			type = #{type},
+			resUrl = #{resUrl},
+			level = #{level},
+			description = #{description}
+	   where id = #{id}
+	</update>
+	
+	<!-- 更新 -->
+	<update id="updateSortOrder" parameterType="Resources">
+	    update resources
+	    set level = #{level}
+	   where id = #{id}
+	</update>
+	<!-- 根据部门Id获取该用户的权限-->
+	<select id="findRoleRes" parameterType="String" resultType="Resources">
+		SELECT 
+		<include refid="selectId" />
+		FROM resources WHERE id in(
+		SELECT resc_id FROM
+		res_roles WHERE role_id = #{roleId})
+		order By level asc
+	</select>
+	
+	<!-- 根据账号Id获取该用户的权限-->
+	<select id="findAccountResourcess" parameterType="String" resultType="Resources">
+		SELECT 
+		<include refid="selectId" />
+		FROM resources WHERE id in(
+		SELECT resc_id FROM
+		res_roles WHERE role_id in(
+		SELECT role_id FROM acc_role
+		WHERE acc_id=#{id}))
+		order By level asc
+	</select>
+	<!-- 删 -->
+	<delete id="deleteResourcesRole" parameterType="String">
+		delete from res_roles
+		where role_id=#{id}
+	</delete>
+	
+	<insert id="addRoleRes" parameterType="ResourcesRole">
+	insert into res_roles (role_id,resc_id) value (#{roleId},#{resId})
+	</insert>
+	
+</mapper>

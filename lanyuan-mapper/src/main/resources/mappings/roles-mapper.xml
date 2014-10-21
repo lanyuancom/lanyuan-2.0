@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lanyuan.mapper.RolesMapper">
+
+<!--mybatis ehcache缓存配置  -->
+<!-- 以下两个<cache>标签二选一,第一个可以输出日志,第二个不输出日志 
+<cache type="org.mybatis.caches.ehcache.LoggingEhcache" />-->
+<!-- <cache type="org.mybatis.caches.ehcache.EhcacheCache"/> -->
+	<!-- 以下与实体类的中字段一致 -->
+	<sql id="selectId">
+		id,
+		enable,
+		name,
+		roleKey,
+		description
+	</sql>
+	
+	<!--resultType="Roles" 每返回一条结果封装到Account里 -->
+	<select id="query" resultType="Roles" parameterType="java.util.HashMap">
+		select
+		<include refid="selectId" />
+		from ly_role
+		<where>
+			<if test="t.name != null and t.name != ''">
+				name like '%${t.name}%'
+			</if>
+		</where>
+	</select>
+	<select id="queryAll" resultType="Roles" parameterType="Roles">
+		select
+		<include refid="selectId" />
+		from ly_role
+		<where>
+			<if test="name != null and name != ''">
+				name like '%${name}%'
+			</if>
+		</where>
+	</select>
+	<select id="isExist" resultType="Roles" parameterType="String">
+		select
+		<include refid="selectId" />
+		from ly_role
+		where name = #{name}
+	</select>
+	
+	<insert id="add" parameterType="Roles">
+		insert into ly_role ( enable,name,roleKey,description)
+		values (#{enable},
+		#{name}, #{roleKey},
+		#{description})
+	</insert>
+	<delete id="delete" parameterType="String">
+		delete from ly_role where
+		id=#{id}
+	</delete>
+	<select id="getById" parameterType="String" resultType="Roles">
+		select
+		<include refid="selectId" />
+		from ly_role where id=#{id}
+	</select>
+	<update id="update" parameterType="Roles">
+		update ly_role
+		<set>
+			<if test="name != null and name != ''">
+				name=#{name},
+			</if>
+			<if test="enable != null and enable != ''">
+				enable=#{enable},
+			</if>
+			<if test="description != null and description != ''">
+				description=#{description},
+			</if>
+			<if test="roleKey != null and roleKey != ''">
+				roleKey=#{roleKey}
+			</if>
+		</set>
+		where id=#{id}
+	</update>
+	<select id="findbyAccountRole" parameterType="String" resultType="Roles">
+  select 
+  <include refid="selectId" /> 
+  from ly_role where id in (SELECT role_id FROM acc_role WHERE acc_id=#{accountId}) 
+  </select>
+  <delete id="deleteAccountRole" parameterType="String">
+		delete from acc_role
+		where acc_id=#{accountId}
+	</delete>
+  <insert id="addAccRole" parameterType="RoleAccount">
+	insert into acc_role (acc_id,role_id) value (#{accountId},#{roleId})
+	</insert>
+</mapper>
