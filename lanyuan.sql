@@ -10,10 +10,26 @@ Target Server Type    : MYSQL
 Target Server Version : 50616
 File Encoding         : 65001
 
-Date: 2014-10-21 14:31:09
+Date: 2014-11-18 09:10:23
 */
 
 SET FOREIGN_KEY_CHECKS=0;
+
+-- ----------------------------
+-- Table structure for aaa
+-- ----------------------------
+DROP TABLE IF EXISTS `aaa`;
+CREATE TABLE `aaa` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `version` int(20) NOT NULL,
+  `wa` varchar(10) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of aaa
+-- ----------------------------
+INSERT INTO `aaa` VALUES ('1', '3', '200');
 
 -- ----------------------------
 -- Table structure for account
@@ -34,8 +50,8 @@ CREATE TABLE `account` (
 -- ----------------------------
 -- Records of account
 -- ----------------------------
-INSERT INTO `account` VALUES ('1', 'root', 'Y6nw6nu5gFB5a2SehUgYRQ==', '0', '根账号', '1', '2014-04-15 16:17:03', '0');
-INSERT INTO `account` VALUES ('33', '00', 'KcPuo/MF1rgj9WKsS+NSFw==', null, '00', '1', '2014-04-15 16:41:57', '0');
+INSERT INTO `account` VALUES ('1', 'root', 'Y6nw6nu5gFB5a2SehUgYRQ==', '0', '根账号', '1', '2014-11-12 09:44:36', '0');
+INSERT INTO `account` VALUES ('33', '00', 'root', null, '00', '1', '2014-10-27 18:23:25', '0');
 INSERT INTO `account` VALUES ('34', 'test', '4QrcOUm6Wau+VuBX8g+IPg==', null, 'test', '1', '2014-04-16 11:42:41', '0');
 
 -- ----------------------------
@@ -51,9 +67,9 @@ CREATE TABLE `acc_role` (
 -- ----------------------------
 -- Records of acc_role
 -- ----------------------------
-INSERT INTO `acc_role` VALUES ('1', '1');
 INSERT INTO `acc_role` VALUES ('1', '2');
 INSERT INTO `acc_role` VALUES ('1', '3');
+INSERT INTO `acc_role` VALUES ('1', '4');
 INSERT INTO `acc_role` VALUES ('33', '3');
 INSERT INTO `acc_role` VALUES ('34', '2');
 INSERT INTO `acc_role` VALUES ('34', '3');
@@ -114,7 +130,7 @@ CREATE TABLE `log` (
   `userIP` varchar(30) DEFAULT NULL,
   `operTime` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2778 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2796 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of log
@@ -1400,6 +1416,24 @@ INSERT INTO `log` VALUES ('2774', 'root', 'UserLoginServiceImpl', 'add', '101', 
 INSERT INTO `log` VALUES ('2775', 'root', 'UserLoginServiceImpl', 'add', '217', '127.0.0.1', '2014-10-21 10:24:05');
 INSERT INTO `log` VALUES ('2776', 'root', 'UserLoginServiceImpl', 'add', '3', '127.0.0.1', '2014-10-21 10:33:13');
 INSERT INTO `log` VALUES ('2777', 'root', 'UserLoginServiceImpl', 'add', '3', '127.0.0.1', '2014-10-21 10:38:56');
+INSERT INTO `log` VALUES ('2778', 'root', 'UserLoginServiceImpl', 'add', '99', '127.0.0.1', '2014-10-21 16:11:31');
+INSERT INTO `log` VALUES ('2779', '无法获取登录用户信息！', 'UserLoginServiceImpl', 'add', '23', '127.0.0.1', '2014-10-21 18:01:58');
+INSERT INTO `log` VALUES ('2780', 'sam', 'UserLoginServiceImpl', 'add', '216', '127.0.0.1', '2014-10-29 14:33:16');
+INSERT INTO `log` VALUES ('2781', 'root', 'UserLoginServiceImpl', 'add', '151', null, '2014-10-29 20:12:09');
+INSERT INTO `log` VALUES ('2782', 'root', 'UserLoginServiceImpl', 'add', '17', null, '2014-10-29 20:15:42');
+INSERT INTO `log` VALUES ('2783', '00', 'UserLoginServiceImpl', 'add', '15', null, '2014-10-29 20:17:58');
+INSERT INTO `log` VALUES ('2784', '00', 'UserLoginServiceImpl', 'add', '19', null, '2014-10-29 20:19:54');
+INSERT INTO `log` VALUES ('2785', 'root', 'UserLoginServiceImpl', 'add', '114', null, '2014-10-30 09:51:27');
+INSERT INTO `log` VALUES ('2786', '00', 'UserLoginServiceImpl', 'add', '1', null, '2014-10-30 09:52:06');
+INSERT INTO `log` VALUES ('2787', '00', 'UserLoginServiceImpl', 'add', '13', null, '2014-10-30 10:14:52');
+INSERT INTO `log` VALUES ('2788', '00', 'UserLoginServiceImpl', 'add', '19', null, '2014-10-30 10:15:30');
+INSERT INTO `log` VALUES ('2789', '00', 'UserLoginServiceImpl', 'add', '15', null, '2014-10-30 10:20:23');
+INSERT INTO `log` VALUES ('2790', '00', 'UserLoginServiceImpl', 'add', '22', null, '2014-10-30 10:24:50');
+INSERT INTO `log` VALUES ('2791', '00', 'UserLoginServiceImpl', 'add', '18', null, '2014-10-30 10:39:17');
+INSERT INTO `log` VALUES ('2792', '00', 'UserLoginServiceImpl', 'add', '25', null, '2014-10-30 11:06:11');
+INSERT INTO `log` VALUES ('2793', '00', 'UserLoginServiceImpl', 'add', '17', null, '2014-10-30 11:12:55');
+INSERT INTO `log` VALUES ('2794', '00', 'UserLoginServiceImpl', 'add', '192', null, '2014-10-30 16:39:12');
+INSERT INTO `log` VALUES ('2795', '00', 'UserLoginServiceImpl', 'add', '48', null, '2014-10-30 18:57:50');
 
 -- ----------------------------
 -- Table structure for ly_role
@@ -1412,14 +1446,14 @@ CREATE TABLE `ly_role` (
   `roleKey` varchar(50) DEFAULT NULL,
   `description` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of ly_role
 -- ----------------------------
-INSERT INTO `ly_role` VALUES ('1', '1', '根账号', 'root', '拥有所有权限1');
 INSERT INTO `ly_role` VALUES ('2', '1', '管理员', 'admin', '管理系统权限');
 INSERT INTO `ly_role` VALUES ('3', '1', '普通角色', 'simple', '普通角色');
+INSERT INTO `ly_role` VALUES ('4', '1', '根账号', 'root', '拥有所有权限1');
 
 -- ----------------------------
 -- Table structure for resources
@@ -1484,14 +1518,20 @@ CREATE TABLE `res_roles` (
 -- ----------------------------
 -- Records of res_roles
 -- ----------------------------
-INSERT INTO `res_roles` VALUES ('1', '1');
+INSERT INTO `res_roles` VALUES ('4', '1');
+INSERT INTO `res_roles` VALUES ('4', '2');
+INSERT INTO `res_roles` VALUES ('4', '3');
+INSERT INTO `res_roles` VALUES ('4', '4');
+INSERT INTO `res_roles` VALUES ('4', '5');
+INSERT INTO `res_roles` VALUES ('4', '6');
 INSERT INTO `res_roles` VALUES ('4', '7');
 INSERT INTO `res_roles` VALUES ('4', '8');
+INSERT INTO `res_roles` VALUES ('4', '9');
 INSERT INTO `res_roles` VALUES ('4', '10');
+INSERT INTO `res_roles` VALUES ('4', '11');
 INSERT INTO `res_roles` VALUES ('4', '12');
 INSERT INTO `res_roles` VALUES ('4', '13');
 INSERT INTO `res_roles` VALUES ('4', '14');
-INSERT INTO `res_roles` VALUES ('4', '15');
 INSERT INTO `res_roles` VALUES ('4', '16');
 INSERT INTO `res_roles` VALUES ('4', '17');
 INSERT INTO `res_roles` VALUES ('4', '18');
@@ -1504,6 +1544,10 @@ INSERT INTO `res_roles` VALUES ('4', '34');
 INSERT INTO `res_roles` VALUES ('4', '35');
 INSERT INTO `res_roles` VALUES ('4', '36');
 INSERT INTO `res_roles` VALUES ('4', '37');
+INSERT INTO `res_roles` VALUES ('4', '38');
+INSERT INTO `res_roles` VALUES ('4', '39');
+INSERT INTO `res_roles` VALUES ('4', '40');
+INSERT INTO `res_roles` VALUES ('4', '41');
 
 -- ----------------------------
 -- Table structure for server_info
@@ -1553,7 +1597,7 @@ CREATE TABLE `userloginlist` (
   `loginIP` varchar(40) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_userloginlist` (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=180 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=206 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of userloginlist
@@ -1737,3 +1781,29 @@ INSERT INTO `userloginlist` VALUES ('176', '1', 'root', '2014-07-27 20:50:39', '
 INSERT INTO `userloginlist` VALUES ('177', '1', 'root', '2014-10-21 10:24:05', '127.0.0.1');
 INSERT INTO `userloginlist` VALUES ('178', '1', 'root', '2014-10-21 10:33:13', '127.0.0.1');
 INSERT INTO `userloginlist` VALUES ('179', '1', 'root', '2014-10-21 10:38:56', '127.0.0.1');
+INSERT INTO `userloginlist` VALUES ('180', '1', 'root', '2014-10-21 16:11:31', '127.0.0.1');
+INSERT INTO `userloginlist` VALUES ('181', '1', 'root', '2014-10-21 18:01:58', '127.0.0.1');
+INSERT INTO `userloginlist` VALUES ('182', '1', 'root', '2014-10-29 14:33:16', null);
+INSERT INTO `userloginlist` VALUES ('183', '1', 'root', '2014-10-29 20:12:08', '127.0.0.1');
+INSERT INTO `userloginlist` VALUES ('184', '1', 'root', '2014-10-29 20:15:42', '127.0.0.1');
+INSERT INTO `userloginlist` VALUES ('185', '1', 'root', '2014-10-29 20:17:58', '127.0.0.1');
+INSERT INTO `userloginlist` VALUES ('186', '33', '00', '2014-10-29 20:19:54', '127.0.0.1');
+INSERT INTO `userloginlist` VALUES ('187', '1', 'root', '2014-10-30 09:51:27', '127.0.0.1');
+INSERT INTO `userloginlist` VALUES ('188', '33', '00', '2014-10-30 09:52:06', '127.0.0.1');
+INSERT INTO `userloginlist` VALUES ('189', '33', '00', '2014-10-30 10:14:52', '127.0.0.1');
+INSERT INTO `userloginlist` VALUES ('190', '33', '00', '2014-10-30 10:15:30', '127.0.0.1');
+INSERT INTO `userloginlist` VALUES ('191', '33', '00', '2014-10-30 10:20:23', '127.0.0.1');
+INSERT INTO `userloginlist` VALUES ('192', '33', '00', '2014-10-30 10:24:50', '127.0.0.1');
+INSERT INTO `userloginlist` VALUES ('193', '33', '00', '2014-10-30 10:39:17', '127.0.0.1');
+INSERT INTO `userloginlist` VALUES ('194', '33', '00', '2014-10-30 11:06:11', '127.0.0.1');
+INSERT INTO `userloginlist` VALUES ('195', '33', '00', '2014-10-30 11:12:55', '127.0.0.1');
+INSERT INTO `userloginlist` VALUES ('196', '33', '00', '2014-10-30 16:39:11', '127.0.0.1');
+INSERT INTO `userloginlist` VALUES ('197', '33', '00', '2014-10-30 18:57:50', '127.0.0.1');
+INSERT INTO `userloginlist` VALUES ('198', '1', 'root', '2014-11-12 09:45:36', '127.0.0.1');
+INSERT INTO `userloginlist` VALUES ('199', '1', 'root', '2014-11-12 09:57:57', '127.0.0.1');
+INSERT INTO `userloginlist` VALUES ('200', '1', 'root', '2014-11-12 11:22:00', '127.0.0.1');
+INSERT INTO `userloginlist` VALUES ('201', '1', 'root', '2014-11-12 12:24:31', '0:0:0:0:0:0:0:1');
+INSERT INTO `userloginlist` VALUES ('202', '1', 'root', '2014-11-12 12:26:49', '0:0:0:0:0:0:0:1');
+INSERT INTO `userloginlist` VALUES ('203', '1', 'root', '2014-11-12 12:28:33', '0:0:0:0:0:0:0:1');
+INSERT INTO `userloginlist` VALUES ('204', '1', 'root', '2014-11-12 12:32:02', '0:0:0:0:0:0:0:1');
+INSERT INTO `userloginlist` VALUES ('205', '1', 'root', '2014-11-17 11:08:30', '0:0:0:0:0:0:0:1');
