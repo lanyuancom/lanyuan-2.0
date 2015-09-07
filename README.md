@@ -3,7 +3,7 @@ lanyuan-2.0
 
 蓝缘系统版本2.0
 
-预览地址：http://www.lanoss.com
+预览地址：http://www.lanyuanoss.com
 
 多谢群友们的支持，该网站是用到啊里云服务+香港主机，希望大家继续支持捐
 
